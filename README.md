@@ -43,12 +43,15 @@ sudo podman build -t worker -f Dockerfile-worker
 ```
 sudo podman run \
 --rm -d \
--p 8081:8080 \
+-p 8080:8080 \
 -p 8700:8700 \
 -v ./config:/etc/osbuild-composer \
 --network osbuild-net \
 --name composer composer
 ```
+
+**_NOTE_**: The worker container needs to be run in privileged mode and have additional
+capabilities
 
 ```
 sudo podman run \
