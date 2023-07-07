@@ -1,0 +1,14 @@
+FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
+RUN microdnf install -y python3 python3-dnf
+RUN mkdir -p "/usr/libexec/osbuild-composer"
+RUN mkdir -p "/etc/osbuild-composer/"
+RUN mkdir -p "/run/osbuild-composer/"
+RUN mkdir -p "/var/cache/osbuild-composer/"
+RUN mkdir -p "/var/lib/osbuild-composer/"
+RUN mkdir -p "/usr/share/osbuild-composer/"
+RUN mkdir -p "/opt/migrate/"
+COPY  /bin/osbuild-composer /usr/libexec/osbuild-composer/
+COPY ./entrypoint.py /opt/entrypoint.py
+
+EXPOSE 8080 8700
+ENTRYPOINT ["python3", "/opt/entrypoint.py", "--remote-worker-api", "--composer-api", "--shutdown-wait-period", "15"]
