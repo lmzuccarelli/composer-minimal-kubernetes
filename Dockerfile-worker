@@ -1,6 +1,12 @@
 FROM fedora
+
+LABEL maintainer="gzuccare@redhat.com"
+
+LABEL io.k8s.display-name="OSBUILD-COMPOSER minimal" \
+      io.k8s.description="This is the base image for the osbuild-worker used in our Tekton pipeline"
+
 RUN dnf update -y && dnf upgrade -y
-RUN dnf install -y libxcrypt-compat qemu-img osbuild osbuild-ostree
+RUN dnf install -y libxcrypt-compat qemu-img osbuild osbuild-ostree policycoreutils
 RUN mkdir -p "/usr/libexec/osbuild-composer"
 RUN mkdir -p "/etc/osbuild-composer/"
 RUN mkdir -p "/run/osbuild-composer/"
@@ -9,5 +15,8 @@ RUN mkdir -p "/var/lib/osbuild-composer/"
 RUN mkdir -p "/var/cache/osbuild-composer/output"
 COPY /bin/osbuild-worker /usr/libexec/osbuild-composer/
 COPY ./dnf-json /usr/libexec/osbuild-composer/
+COPY ./uid_entrypoint.sh ./uid_entrypoint.sh
 
-ENTRYPOINT ["/usr/libexec/osbuild-composer/osbuild-worker", "172.16.0.1:8700"]
+
+# execute via command (see deployment) "/usr/libexec/osbuild-composer/osbuild-worker"  "composer.osbuild.svc.cluster.local:8700"
+ENTRYPOINT ["./uid_entrypoint.sh"]

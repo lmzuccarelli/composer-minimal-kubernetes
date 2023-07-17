@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+  namespace: osbuild
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - args:
+            - "server"
+            - "/data"
+            - "--console-address"
+            - ":9001"
+          image: quay.io/minio/minio:latest
+          name: minio-server
+          volumeMounts:
+            - mountPath: /data
+              name: minio-volume
+      volumes:
+        - name: minio-volume
+          persistentVolumeClaim:
+            claimName: minio-pvc
+            

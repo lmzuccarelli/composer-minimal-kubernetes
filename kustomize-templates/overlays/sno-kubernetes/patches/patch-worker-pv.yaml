@@ -1,0 +1,13 @@
+- op: replace
+  path: "/spec/local"
+  value:
+    path: WORKER_PATH
+
+- op: replace
+  path: "/spec/nodeAffinity/required/nodeSelectorTerms/0"
+  value:
+    matchExpressions:
+      - key: kubernetes.io/hostname
+        operator: In
+        values:
+          - KUBEHOST 

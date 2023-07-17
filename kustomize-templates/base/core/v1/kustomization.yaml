@@ -1,0 +1,8 @@
+resources:
+  - pv-minio.yaml
+  - pv-worker.yaml
+  - pv-composer.yaml
+  - pvc-minio.yaml
+  - pvc-worker.yaml
+  - pvc-composer.yaml
+

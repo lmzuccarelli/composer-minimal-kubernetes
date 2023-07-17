@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local
+  annotations:
+    description: Default storage class used for the osbuild project
+  namespace: osbuild
+provisioner: Local
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

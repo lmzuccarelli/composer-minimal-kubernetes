@@ -1,11 +1,12 @@
 #!/bin/bash
-if (( $# != 3 )); then
-    echo "Usage: $0 <openssl-config> <certdir> <cadir>"
+if (( $# != 4 )); then
+    echo "Usage: $0 <openssl-config> <certdir> <cadir> <kubeserver-ip>"
     echo
     echo "Positional arguments"
     echo "  <openssl-config>  OpenSSL configuration file"
     echo "  <certdir>         Destination directory for the generated files"
     echo "  <cadir>           Working directory for the generation process"
+    echo "  <kubeserver-ip>   The kuberenets server ip address"
     exit 1
 fi
 
@@ -16,6 +17,7 @@ set -euxo pipefail
 OPENSSL_CONFIG="$1"
 CERTDIR="$2"
 CADIR="$3"
+KUBESERVER_IP="$4"
 
 # The $CADIR might exist from a previous test (current Schutzbot's imperfection)
 rm -rf "$CADIR" || true
@@ -44,8 +46,8 @@ pushd "$CADIR"
         -keyout "$CERTDIR"/composer-key.pem \
         -new -nodes \
         -out /tmp/composer-csr.pem \
-        -subj "/CN=localhost/emailAddress=osbuild@example.com" \
-        -addext "subjectAltName=DNS:localhost, IP:172.16.0.1"
+        -subj "/CN=composer.osbuild.svc.cluster.local/emailAddress=osbuild@example.com" \
+        -addext "subjectAltName=DNS:composer.osbuild.svc.cluster.local, IP:${KUBESERVER_IP}"
 
     openssl ca -batch -config "$OPENSSL_CONFIG" \
         -extensions osbuild_server_ext \
@@ -57,8 +59,8 @@ pushd "$CADIR"
         -keyout "$CERTDIR"/worker-key.pem \
         -new -nodes \
         -out /tmp/worker-csr.pem \
-        -subj "/CN=localhost/emailAddress=osbuild@example.com" \
-        -addext "subjectAltName=DNS:localhost, IP:172.16.0.1"
+        -subj "/CN=worker.osbuild.svc.cluster.local/emailAddress=osbuild@example.com" \
+        -addext "subjectAltName=DNS:worker.osbuild.svc.cluster.local"
 
     openssl ca -batch -config "$OPENSSL_CONFIG" \
         -extensions osbuild_client_ext \
@@ -70,8 +72,8 @@ pushd "$CADIR"
         -keyout "$CERTDIR"/client-key.pem \
         -new -nodes \
         -out /tmp/client-csr.pem \
-        -subj "/CN=client.osbuild.org/emailAddress=osbuild@example.com" \
-        -addext "subjectAltName=DNS:localhost, IP:172.16.0.1"
+        -subj "/CN=${KUBESERVER_IP}/emailAddress=osbuild@example.com" \
+        -addext "subjectAltName=DNS:${KUBESERVER_IP}"
 
     openssl ca -batch -config "$OPENSSL_CONFIG" \
         -extensions osbuild_client_ext \
@@ -87,7 +89,7 @@ pushd "$CADIR"
         -new -nodes \
         -out /tmp/kojihub-csr.pem \
         -subj "/CN=localhost/emailAddress=osbuild@example.com" \
-        -addext "subjectAltName=DNS:localhost, IP:172.16.0.1"
+        -addext "subjectAltName=DNS:localhost"
 
     openssl ca -batch -config "$OPENSSL_CONFIG" \
         -extensions osbuild_server_ext \

@@ -1,0 +1,3 @@
+V	330711150447Z		704559407BA5039045A1A4A1829ECC5D25D9F810	unknown	/CN=composer.osbuild.svc.cluster.local/emailAddress=osbuild@example.com
+V	330711150447Z		65D0550436F9F4D43FC18F776D06CB84633A63E6	unknown	/CN=worker.osbuild.svc.cluster.local/emailAddress=osbuild@example.com
+V	330711150447Z		266CAFCD53FC429AA5DD175917841769C1A7540B	unknown	/CN=mostro.kubernetes.org/emailAddress=osbuild@example.com

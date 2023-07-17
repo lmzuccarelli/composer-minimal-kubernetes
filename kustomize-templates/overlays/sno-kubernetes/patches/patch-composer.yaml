@@ -1,0 +1,9 @@
+# default values 
+# override by changing value:
+- op: replace
+  path: "/spec/template/spec/containers/0"
+  value:
+    image: COMPOSER_IMAGE
+
+
+

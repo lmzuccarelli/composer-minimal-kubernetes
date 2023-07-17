@@ -1,0 +1,4 @@
+resources:
+  - osbuild-worker.yaml
+  - osbuild-composer.yaml
+  - minio.yaml

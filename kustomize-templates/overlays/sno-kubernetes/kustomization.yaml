@@ -1,0 +1,43 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # Tested on SNO (Single Node) Kubernetes  
+  - namespace/namespace.yaml
+  - ../../base/storage.k8s.io/v1/
+  - ../../base/core/v1/
+  - ../../base/apps/deployments/
+  - ../../base/apps/services/
+namespace: osbuild
+
+patches:
+- path: patches/patch-composer.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: composer
+    version: v1
+
+- path: patches/patch-worker.yaml
+  target:
+    group: apps
+    kind: Deployment
+    name: worker
+    version: v1
+
+- path: patches/patch-worker-pv.yaml
+  target:
+    kind: PersistentVolume
+    name: worker-pv
+    version: v1
+
+- path: patches/patch-composer-pv.yaml
+  target:
+    kind: PersistentVolume
+    name: composer-pv
+    version: v1
+
+- path: patches/patch-minio-pv.yaml
+  target:
+    kind: PersistentVolume
+    name: minior-pv
+    version: v1

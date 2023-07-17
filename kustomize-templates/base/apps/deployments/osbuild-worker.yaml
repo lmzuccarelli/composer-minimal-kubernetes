@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: osbuild
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - command:
+            - "/usr/libexec/osbuild-composer/osbuild-worker"
+            - "composer.osbuild.svc.cluster.local:8700"
+          image: quay.io/luzuccar/osbuild-worker:v1.0.0
+          name: osbuild-worker-main
+          imagePullPolicy: Always
+          env:
+            - name: CACHE_DIRECTORY
+              value: "/var/cache/osbuild-worker"
+          securityContext:
+            runAsUser: 0
+            privileged: true
+            capabilities:
+              add: ["MKNOD", "SYS_ADMIN", "NET_ADMIN" , "MAC_ADMIN"]
+          volumeMounts:
+            - mountPath: /etc/osbuild-composer
+              name: composer-volume
+            - mountPath: /etc/osbuild-worker
+              name: worker-volume
+            - mountPath: /dev
+              name: dev-all
+      volumes:
+        - name: composer-volume
+          persistentVolumeClaim:
+            claimName: composer-pvc
+        - name: worker-volume
+          persistentVolumeClaim:
+            claimName: worker-pvc
+        - name: dev-all
+          hostPath:
+            path: /dev
+
