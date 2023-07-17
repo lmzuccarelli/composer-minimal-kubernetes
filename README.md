@@ -134,7 +134,7 @@ Monitor the deploy
 kubectl get all -n osbuild
 ```
 
-Once all pods are in ready status (as shown below) - we are ready to config the minio service
+Once all pods are in "RUNNING" status (as shown below) - we can now configure the minio service
 
 ```
 $ kubectl get all -n osbuild
@@ -170,7 +170,7 @@ Navigate to settings (on the left menu) and update the region setting to `us-eas
 
 At the top of the browser a *Restart* server button will appear - click it to restart minio
 
-You are no ready to start a build.
+You are now ready to start a build.
 
 Create a build  
 
@@ -184,3 +184,45 @@ curl -X 'POST' \
   --cert ./config/client-crt.pem \
   -d @examples/compose-request.json
 ```
+
+Results from worker pod
+
+```
+time="2023-07-17T13:00:06Z" level=info msg="Job 'd7ffecd8-0228-47d3-91de-7decba307d56' (depsolve) finished"
+time="2023-07-17T13:00:19Z" level=info msg="Running job 'da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec' (osbuild)\n"
+time="2023-07-17T13:06:29Z" level=info msg="build pipeline results:\n" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.rpm success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.selinux success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="os pipeline results:\n" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.kernel-cmdline success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.rpm success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.fix-bls success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.locale success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.hostname success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.timezone success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.users success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.fstab success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.grub2 success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.systemd success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.selinux success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="image pipeline results:\n" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.truncate success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.sfdisk success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.mkfs.fat success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.mkfs.ext4 success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.mkfs.ext4 success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.copy success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.grub2.inst success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="qcow2 pipeline results:\n" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="  org.osbuild.qemu success" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:29Z" level=info msg="[AWS] 🚀 Uploading image to S3: composer-minimal/composer-api-594fb507-c227-4d00-9bb2-5d23a3be9570-disk.qcow2"
+time="2023-07-17T13:06:30Z" level=info msg="[AWS] 📋 Generating Presigned URL for S3 object composer-minimal/composer-api-594fb507-c227-4d00-9bb2-5d23a3be9570-disk.qcow2"
+time="2023-07-17T13:06:30Z" level=info msg="[AWS] 🎉 S3 Presigned URL ready"
+time="2023-07-17T13:06:30Z" level=info msg="osbuild job succeeded" jobId=da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec
+time="2023-07-17T13:06:31Z" level=info msg="Job 'da6a5dc5-a76b-43d7-9eb0-acbdbeceb5ec' (osbuild) finished"
+
+```
+
+Screenshot from minio
+
+![screenshot](./readme-images/minio.png)
