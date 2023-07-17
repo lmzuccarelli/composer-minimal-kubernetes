@@ -1,4 +1,7 @@
 #!/bin/bash
+
+echo "LMZ $#"
+
 if (( $# != 4 )); then
     echo "Usage: $0 <openssl-config> <certdir> <cadir> <kubeserver-ip>"
     echo

@@ -58,12 +58,19 @@ N.B. The certs make use of an IP address (refer to the setup.sh) for the Kuberne
 We have used NodePort settings to access the composer api remotely so please change this accordingly.
 
 ```
-./setup.sh
+./scripts/setup.sh
 ```
 
 
 **_NOTE_**: The worker container needs to be run in privileged mode and have additional
 capabilities. Refer to the kustomize-templates/base/apps/deployment/osbuild-worker.yaml file
+
+We are using local (hostpath) storage on the SNO Kubernetes cluster. 
+Obvisuosly this will change if you are using NFS or something similar. 
+Remember to update the StorageClass and PersistentVolume files in the kustomize-templates folder
+
+The concept of copying the ./config folder is required as both the worker and composer containers 
+will mount these folders to make use of the relevant certs and configs.
 
 Create the relevant paths for PV's etc on you Kubernetes host (open a new terminal and ssh to the kube server) 
 
@@ -91,7 +98,7 @@ LOCAL_WORKER_IMAGE=<worker-image>
 Execute the update-patch-files-script
 
 ```
-./update-patch-files.sh
+./scripts/update-patch-files.sh
 ```
 
 Before deploying copy all the contents of the config directory (certs generated from the ./setup.sh command)
