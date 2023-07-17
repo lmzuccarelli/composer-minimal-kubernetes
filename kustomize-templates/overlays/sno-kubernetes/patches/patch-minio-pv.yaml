@@ -1,4 +1,9 @@
 - op: replace
+  path: "/spec/local"
+  value:
+    path: MINIO_PATH
+
+- op: replace
   path: "/spec/nodeAffinity/required/nodeSelectorTerms/0"
   value:
     matchExpressions:

@@ -1,7 +1,8 @@
 # Overview
 
 This is a simple quick start to get a composer client and worker from the image-builder project (refer to the main [project](https://github.com/osbuild/osbuild-composer))
-together with minio, a generic s3 bucket for local on-prem use, on a vanilla single node Kubernetes cluster, for a simplified dev environment
+together with minio, a generic s3 bucket for local on-prem use, on a vanilla single node Kubernetes cluster, for a simplified dev environment, 
+enabling the building and pushing centos,fedora and rhel images.
 
 ## Architecture (Kubernetes)
 
@@ -58,7 +59,7 @@ podman push <registry/user/osbuild-composer:v1.0.0>
 
 ## Generate the certs
 
-N.B. The certs make use of an IP address (refer to the setup.sh) for the Kubernetes server. 
+**N.B.** The certs make use of an IP address (refer to the setup.sh) for the Kubernetes server. 
 We have used NodePort settings to access the composer api remotely so please change this accordingly.
 
 ```
@@ -66,11 +67,11 @@ We have used NodePort settings to access the composer api remotely so please cha
 ```
 
 
-**_NOTE_**: The worker container needs to be run in privileged mode and have additional
-capabilities. Refer to the kustomize-templates/base/apps/deployment/osbuild-worker.yaml file
+**N.B.**: The worker container needs to be run in privileged mode and have additional
+capabilities. Refer to the ./kustomize-templates/base/apps/deployment/osbuild-worker.yaml file
 
 We are using local (hostpath) storage on the SNO Kubernetes cluster. 
-Obvisuosly this will change if you are using NFS or something similar. 
+obviously this will change if you are using NFS or something similar. 
 Remember to update the StorageClass and PersistentVolume files in the kustomize-templates folder
 
 The concept of copying the ./config folder is required as both the worker and composer containers 
@@ -88,7 +89,7 @@ Ensure the kustomize patch files have all the updates
 
 **NB** - If you created your own version of the composer and worker containers remember to update the image values also
 
-Edit the ./update-patch-files.sh script, change the relevant vars (default values are set) 
+Edit the ./update-patch-files.sh script, change the relevant vars (default values are set).
 
 ```
 LOCAL_KUBEHOST=<your-kubeserver-hostname>
@@ -99,7 +100,7 @@ LOCAL_WORKER_IMAGE=<worker-image>
 
 ```
 
-Execute the update-patch-files-script
+Execute the update-patch-files script
 
 ```
 ./scripts/update-patch-files.sh
