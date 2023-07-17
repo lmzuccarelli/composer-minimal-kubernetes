@@ -5,4 +5,4 @@
       - key: kubernetes.io/hostname
         operator: In
         values:
-          - KUBEHOST 
+          - KUBEHOST

@@ -99,6 +99,16 @@ scp -r lzuccarelli@192.168.0.17:/home/lzuccarelli/Projects/composer-minimal/conf
 scp -r lzuccarelli@192.168.0.17:/home/lzuccarelli/Projects/composer-minimal/config/* data/composer
 ```
 
+Verify the kustomization build
+
+```
+kustomize build ./kustomize-templates/overlays/sno-kubernetes/ -o test.yaml
+
+```
+
+Open the test.yaml file to verify that all changes have been made correctly
+
+
 Deploy to your SNO Kubernetes cluster
 
 Assume you have already exported KUBECONFIG

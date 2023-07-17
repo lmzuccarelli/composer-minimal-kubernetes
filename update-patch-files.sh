@@ -1,9 +1,12 @@
 #!/bin/bash
+#
+set -euxo pipefail
+
 LOCAL_KUBEHOST=mostro
-LOCAL_COMPOSER_PATH=/home/lzuccarelli/data/composer
-LOCAL_WORKER_PATH=/home/lzuccarelli/data/worker
-LOCAL_COMPOSER_IMAGE=quay.io/luzuccar/osbuild-composer:v1.0.0
-LOCAL_WORKER_IMAGE=quay.io/luzuccar/osbuild-worker:v1.0.0
+LOCAL_COMPOSER_PATH="\/home\/lzuccarelli\/data\/composer"
+LOCAL_WORKER_PATH="\/home\/lzuccarelli\/data\/worker"
+LOCAL_COMPOSER_IMAGE="quay.io\/luzuccar\/osbuild-composer:v1.0.0"
+LOCAL_WORKER_IMAGE="quay.io\/luzuccar\/osbuild-worker:v1.0.0"
 
 # update host in patch files
 sed -i "s/KUBEHOST/${LOCAL_KUBEHOST}/g" ./kustomize-templates/overlays/sno-kubernetes/patches/patch-minio-pv.yaml 
