@@ -15,8 +15,10 @@ The following is a list of prerequisites
 - kustomization v4.2.0
 
 
-## Compile osbuild-composer & osbuild-worker 
+## Compile osbuild-composer & osbuild-worker (optional)
 
+We have already built and pushed working version of both the composer and worker containers. 
+This step is only relevant if you want to build and push you own versions.
 
 ```
 cd `/path/to/osbuild-composer`
@@ -27,15 +29,6 @@ go build -o bin ./cmd/osbuild-worker
 ```
 
 Copy these binaries back into the repo, under the bin directory
-
-## Generate the certs
-
-N.B. The certs make use of an IP address (refer to the setup.sh) for the Kubernetes server. 
-We have used NodePort settings to access the composer api remotely so please change this accordingly.
-
-```
-./setup.sh
-```
 
 ## Build the containers (optional)
 
@@ -57,6 +50,17 @@ podman build -t <registry/user/osbuild-worker:v1.0.0> -f Dockerfile-worker
 
 podman push <registry/user/osbuild-composer:v1.0.0>
 ```
+
+
+## Generate the certs
+
+N.B. The certs make use of an IP address (refer to the setup.sh) for the Kubernetes server. 
+We have used NodePort settings to access the composer api remotely so please change this accordingly.
+
+```
+./setup.sh
+```
+
 
 **_NOTE_**: The worker container needs to be run in privileged mode and have additional
 capabilities. Refer to the kustomize-templates/base/apps/deployment/osbuild-worker.yaml file
