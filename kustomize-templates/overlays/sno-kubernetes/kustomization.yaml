@@ -12,14 +12,12 @@ namespace: osbuild
 patches:
 - path: patches/patch-composer.yaml
   target:
-    group: apps
     kind: Deployment
     name: composer
     version: v1
 
 - path: patches/patch-worker.yaml
   target:
-    group: apps
     kind: Deployment
     name: worker
     version: v1

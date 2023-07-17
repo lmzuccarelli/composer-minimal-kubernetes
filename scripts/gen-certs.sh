@@ -76,7 +76,7 @@ pushd "$CADIR"
         -new -nodes \
         -out /tmp/client-csr.pem \
         -subj "/CN=${KUBESERVER_IP}/emailAddress=osbuild@example.com" \
-        -addext "subjectAltName=DNS:${KUBESERVER_IP}"
+        -addext "subjectAltName=DNS:localhost, IP:${KUBESERVER_IP}"
 
     openssl ca -batch -config "$OPENSSL_CONFIG" \
         -extensions osbuild_client_ext \
