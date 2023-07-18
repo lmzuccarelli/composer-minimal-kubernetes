@@ -2,7 +2,7 @@
 
 This is a simple quick start to get a composer client and worker from the image-builder project (refer to the main [project](https://github.com/osbuild/osbuild-composer))
 together with minio, a generic s3 bucket for local on-prem use, on a vanilla single node Kubernetes cluster, for a simplified dev environment, 
-enabling the building and pushing centos,fedora and rhel images.
+enabling the building and pushing of centos,fedora and rhel images.
 
 ## Architecture (Kubernetes)
 
